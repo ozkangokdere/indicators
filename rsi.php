@@ -44,6 +44,7 @@ while(true) {
 				
 				echo $key."\t".$tick["high"]."\t".$value."\t".$tick["volume"]."\t".$tick["openTime"].PHP_EOL;
 				$prevTimeInstant = $currentTimeInstant;
+				$prevValue = $currentValue;
 				
 		}
 	}
