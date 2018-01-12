@@ -1,0 +1,2 @@
+-> Write a SMA Function
+-> Write an EMA Function

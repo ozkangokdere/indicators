@@ -1,0 +1,13 @@
+MACD Line: (12-day EMA - 26-day EMA)
+Signal Line: 9-day EMA of MACD Line
+MACD Histogram: MACD Lİne - Signal Line
+
+SMA: Simple Moving Average
+     A simple moving average is formed by computinbg the average price of a security over a spefified number of periods.
+
+EMA: Exponential Moving Average
+     Exponential moving averages (EMAs) reduce the lag by more weight to recent prices. The weighting applied to the most recent price depends on the number of periods in the moving average. EMAs differ from simple moving averages in that a given day's EMA calculation depends on the EMA calculations for all the days prior to that day. You need far more than 10 days of data to calculate a reasonably accurate 10-day EMA. There are three steps to calculating an exponential moving average. First, calculate the simple moving average for the initial EMA value. An exponential moving average has to start somewhere, so a simle moving average is used as the previous period's EMA in the first calculation. Second, calculate the weighting multiplier. Third, calculate the exponential moving average for each day between the initial EMA value and today, using the price, the multiplier, and the previous period's EMA value. The formula below is for a 10-day EMA.
+
+Initial SMA: 10-period sum / 10
+Multiplier: (2 / (Time periods + 1) ) = (2 / (10 + 1) ) = 0.1818 (18.18%)
+EMA: {Close - EMA(previous day)} x multiplier + EMA(previous day).
