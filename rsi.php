@@ -23,6 +23,7 @@ $cumSumNegativeValues = 0;
 $prevValue = 0;
 $currentValue = 0;
 $value = 0;
+$onePeriodDiff = 0;
 
 // Get Last 500 point
 	$ticks = $api->candlesticks("ETHBTC", "1m");
@@ -34,50 +35,65 @@ $value = 0;
 	$averageLoss = 0;
 	$RS = 0;
 	$RSI = 0;
+	$arrayDiff = [];
+	$rsiPeriod = 14;
+	$RSIArray = [];
 for($x=0; $x<=498; $x++){
 			$value = $ctick["high"] - $ptick["high"];
-			echo $key."\t".$x."\t".$ptick["high"]."\t".$ctick["high"]."\t".$value."\t".$ctick["volume"]."\t".PHP_EOL;
+			//echo $key."\t".$x."\t".$ptick["high"]."\t".$ctick["high"]."\t".$value."\t".$ctick["volume"]."\t".PHP_EOL;
 			$ptick = current($ticks);
 			$ctick = next($ticks);
-			if($periodNum <= 14){
-				if($value>=0)
-					$cumSumPositiveValues += $value;
-				else
-					$cumSumNegativeValues += $value;
-				
-				$periodNum += 1;
-			}
-			else
-			{
-				$periodNum = 1;
-				$averageGain = $cumSumPositiveValues /14.0;
-				$averageLoss = abs($cumSumNegativeValues)/14.0;
-				$RS = averageGain / averageLoss;
-				$RSI = 100 - (100/(1+RS));
-					
-			}
-				
-				
-				
-			
+			array_push($arrayDiff,$value);
 		}
-
+		
+		
+		// Moving Calculation
+		for($r=0; $r<=count($arrayDiff) - $rsiPeriod; $r++){
+		$onePeriodDiff = array_slice($arrayDiff,$r,$rsiPeriod,true);
+		$cumSumPositiveValues = 0;
+		$cumSumNegativeValues = 0;
+			foreach($onePeriodDiff as $dValue){
+			if($dValue>=0)
+				$cumSumPositiveValues += $dValue;
+			else
+				$cumSumNegativeValues += $dValue;
+			}
+			$averageGain = $cumSumPositiveValues /$rsiPeriod;
+			$averageLoss = abs($cumSumNegativeValues)/$rsiPeriod;
+			$RS = $averageGain / $averageLoss;
+			$RSI = 100 - (100/(1+$RS));
+			array_push($RSIArray,$RSI);
+			print_r("\t".$RSI.PHP_EOL);
+		}
+		
 		$prevTimeInstant = $currentTimeInstant;
 		
 		
 		// Continue to calculate RSI from newer values
-while(true) {
+ while(true) {
 	$ticks = $api->candlesticks("ETHBTC", "1m");
 	// Get last candlesticks
 	end($ticks);
 	$ctick = prev($ticks);
 	$currentTimeInstant = $ctick["openTime"];
 	
-	if ($currentTimeInstant != $prevTimeInstant) {
-		
-		echo $key."\t".$currentTimeInstant.PHP_EOL;
-		
+	if ($currentTimeInstant > $prevTimeInstant) {
+		array_push($onePeriodDiff,$ctick["high"]);
+		$onePeriodDiff = array_slice($onePeriodDiff,1,$rsiPeriod,true);
+		foreach($onePeriodDiff as $dValue){
+			if($dValue>=0)
+				$cumSumPositiveValues += $dValue;
+			else
+				$cumSumNegativeValues += $dValue;
+			}
+			$averageGain = $cumSumPositiveValues /$rsiPeriod;
+			$averageLoss = abs($cumSumNegativeValues)/$rsiPeriod;
+			$RS = $averageGain / $averageLoss;
+			$RSI = 100 - (100/(1+$RS));
+			array_push($RSIArray,$RSI);
+			print_r("\t".$RSI.PHP_EOL);
 			$prevTimeInstant = $currentTimeInstant;
 	}
-}
+} 
+
 ?>
