@@ -3,7 +3,8 @@
 namespace FreedomClub;
 class Indicators {
     public function __construct(){}
-    public function sma($array, $periodLength) { // Simple Moving Average
+    public function sma($array, $periodLength)
+    { // Simple Moving Average
         $isArray = false;
         $keys = array_keys($array);
         $length = sizeof($array);
@@ -33,7 +34,9 @@ class Indicators {
 
         return $result;
     }
-    public function ema($array, $periodLength) { // Exponential Moving Average
+
+    public function ema($array, $periodLength)
+    { // Exponential Moving Average
         $isArray = false;
         $keys = array_keys($array);
         $multiplier = 2 / ($periodLength + 1);
@@ -64,8 +67,63 @@ class Indicators {
         }
         else
             $result = $prevElement;
+
+        return $result;
+    }
+
+    public function macd($array)
+    { // Moving Average Convergance Divergance
+        if (!($macdLine = $this->macdLine($array))) return NULL;
+        if (!($signalLine = $this->signalLine($macdLine))) return NULL;;
+
+        $lengthSignalLine = sizeof($signalLine);
+        $macdLine = array_slice($macdLine, -1*$lengthSignalLine); // it takes last $lengthSignalLine of $macdLine array
+
+        $macdHistogram = $this->macdHistogram($macdLine, $signalLine);
+        
+        return array($macdLine, $signalLine, $macdHistogram);
+    }
+    
+    private function macdLine($array)
+    {
+        if (!($emaW12Period = $this->ema($array, 12))) return NULL;
+        if (!($emaW26Period = $this->ema($array, 26))) return NULL;
+                
+        $lengthEmaW26Period = sizeof($emaW26Period);
+        $emaW12Period = array_slice($emaW12Period, -1*$lengthEmaW26Period); // it takes last $lengthEmaW26Periof of $emaW12Period
+        
+        if (!($result = $this->arraySubstract($emaW12Period, $emaW26Period))) return NULL;
+
+        return $result;
+    }
+    
+    private function signalLine($macdLine)
+    {
+        if (!($emaW9Period = $this->ema($macdLine, 9))) return NULL;
+        
+        return $emaW9Period;
+    }
+
+    private function arraySubstract($array1, $array2)
+    {
+        $length1 = sizeof($array1);
+        $length2 = sizeof($array2);
+        if ($length1 != $length2) return NULL;
+
+        $result = array();
+
+        for ($i = 0; $i < $length1; ++$i) {
+            array_push($result, $array1[$i] - $array2[$i]);
+        }
         
         return $result;
+    }
+
+    private function macdHistogram($macdLine, $signalLine)
+    {
+        if (!($macdHistogram = $this->arraySubstract($macdLine, $signalLine))) return NULL;
+
+        return $macdHistogram;
     }
 }
 
