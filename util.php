@@ -14,10 +14,10 @@ class Indicators {
         }
         
         if ($periodLength > $length) 
-            return -1; // Purpose: Error. It should be checked.
+            return NULL; // Purpose: Error. It should be checked.
 
         if ($periodLength < 1)
-            return -1; // Purpose: Error. It should be checked.
+            return NULL; // Purpose: Error. It should be checked.
         
         for ($i = 0; $i < $length - $periodLength + 1; ++$i) {
             $sum = 0;
@@ -46,10 +46,10 @@ class Indicators {
         }
         
         if ($periodLength > $length)
-            return -1; // Purpose: Error. It should be checked.
+            return NULL; // Purpose: Error. It should be checked.
 
         if ($periodLength < 1)
-            return -1; // Purpose: Error. It should be checked.
+            return NULL; // Purpose: Error. It should be checked.
 
         $prevElement = $this->sma(array_slice($array, $keys[0], $periodLength), $periodLength);
         
