@@ -69,6 +69,7 @@ class Indicators {
             $result = $prevElement;
 
         return $result;
+
     }
 
     public function macd($array)
@@ -82,6 +83,43 @@ class Indicators {
         $macdHistogram = $this->macdHistogram($macdLine, $signalLine);
         
         return array($macdLine, $signalLine, $macdHistogram);
+    }
+
+    public function boll($array)
+    { // Bollinger Bands
+        if(!($smaW20Period = $this->sma($array, 20))) return NULL;
+
+        //$lengthSmaW20Period = sizeof($smaW20Period);
+
+        //$arraySliced = array_slice($array, -1*$lengthSmaW20Period); // it takes last $lengthSmaW20Period of input $array
+        
+        //$upperBand = array();
+        //$lowerBand = array();
+
+        //for ($i = 0; $i < $lengthSmaW20Period; $i++) {
+            
+        //}
+    }
+
+    private function std($array, $smaOfArray, $periodLength)
+    { // Standard Deviation of Array
+        $lengthArray = sizeof($array);
+        $lengthSmaOfArray = sizeof($smaOfArray);
+
+        $result = array();
+        if ($lengthArray != ($lengthSmaOfArray + $periodLength)) return NULL;
+        for ($i = 0; $i < $lengthArray; $i++) {
+            $sum = 0;
+            for ($j = 0; $j < $periodLength; $j++) {
+                $diff = ($array[$j] - $smaOfArray[$j]);
+                $sum += $diff*$diff;
+            }
+            $sum /= $periodLength;
+            
+            $sum = sqrt($sum);
+            array_push($result, $sum);
+        }
+        return $result;
     }
     
     private function macdLine($array)
