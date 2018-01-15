@@ -39,8 +39,8 @@ $onePeriodDiff = 0;
 	$rsiPeriod = 14;
 	$RSIArray = [];
 for($x=0; $x<=498; $x++){
-			$value = $ctick["high"] - $ptick["high"];
-			//echo $key."\t".$x."\t".$ptick["high"]."\t".$ctick["high"]."\t".$value."\t".$ctick["volume"]."\t".PHP_EOL;
+			$value = $ctick["close"] - $ptick["close"];
+			//echo $key."\t".$x."\t".$ptick["close"]."\t".$ctick["close"]."\t".$value."\t".$ctick["volume"]."\t".PHP_EOL;
 			$ptick = current($ticks);
 			$ctick = next($ticks);
 			array_push($arrayDiff,$value);
@@ -78,7 +78,8 @@ for($x=0; $x<=498; $x++){
 	$currentTimeInstant = $ctick["openTime"];
 	
 	if ($currentTimeInstant > $prevTimeInstant) {
-		array_push($onePeriodDiff,$ctick["high"]);
+		$ptick = prev($ticks);
+		array_push($onePeriodDiff,$ctick["close"] - $ptick["close"]);
 		$onePeriodDiff = array_slice($onePeriodDiff,1,$rsiPeriod,true);
 		foreach($onePeriodDiff as $dValue){
 			if($dValue>=0)
@@ -94,6 +95,5 @@ for($x=0; $x<=498; $x++){
 			print_r("\t".$RSI.PHP_EOL);
 			$prevTimeInstant = $currentTimeInstant;
 	}
-} 
-
+}
 ?>
