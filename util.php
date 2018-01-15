@@ -87,39 +87,28 @@ class Indicators {
 
     public function boll($array)
     { // Bollinger Bands
-        if(!($smaW20Period = $this->sma($array, 20))) return NULL;
+        $periodLength = 20;
+        if(!($smaW20Period = $this->sma($array, $periodLength))) return NULL;
 
-        //$lengthSmaW20Period = sizeof($smaW20Period);
+        $upperBand = array();
+        $lowerBand = array();
 
-        //$arraySliced = array_slice($array, -1*$lengthSmaW20Period); // it takes last $lengthSmaW20Period of input $array
-        
-        //$upperBand = array();
-        //$lowerBand = array();
-
-        //for ($i = 0; $i < $lengthSmaW20Period; $i++) {
-            
-        //}
-    }
-
-    private function std($array, $smaOfArray, $periodLength)
-    { // Standard Deviation of Array
         $lengthArray = sizeof($array);
-        $lengthSmaOfArray = sizeof($smaOfArray);
-
-        $result = array();
-        if ($lengthArray != ($lengthSmaOfArray + $periodLength)) return NULL;
-        for ($i = 0; $i < $lengthArray; $i++) {
+        $lengthSmaW20Period = sizeof($smaW20Period);
+        
+        for ($i = 0; $i < $lengthArray - $periodLength + 1; $i++) {
             $sum = 0;
             for ($j = 0; $j < $periodLength; $j++) {
-                $diff = ($array[$j] - $smaOfArray[$j]);
+                $diff = ($array[$i+$j] - $smaW20Period[$i]);
                 $sum += $diff*$diff;
             }
             $sum /= $periodLength;
-            
             $sum = sqrt($sum);
-            array_push($result, $sum);
+            array_push($upperBand, $smaW20Period[$i] + $sum*2);
+            array_push($lowerBand, $smaW20Period[$i] - $sum*2);
+            
         }
-        return $result;
+        return array($smaW20Period, $upperBand, $lowerBand);
     }
     
     private function macdLine($array)
