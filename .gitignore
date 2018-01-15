@@ -1,3 +1,7 @@
 *.php~
 .gitignore~
 keysecret
+*.txt~
+*.php#
+.#*
+g2bd*
