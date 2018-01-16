@@ -1,0 +1,24 @@
+link: https://www.investopedia.com/articles/active-trading/11/four-types-of-active-traders.asp
+
+1. Day Trading 
+Day trading is perhaps the most well known active-trading style. It's often considered a pseudonym(takma isim) for active trading itself. Day trading, as its name implies, is the method of buying and selling securities within the same day. Positions are closed out within the same day they are taken, and no position is held overnight. Traditionally, day trading is done by professional traders, such as specialists or market makers. However, electronic trading has opened up this practice to novice traders. 
+For related reading, also see Day Trading Strategies For Beginners. link: https://www.investopedia.com/articles/trading/06/daytradingretail.asp
+
+comment: that looks like our strategy @og
+
+2. Position Trading
+Some actually consider position trading to be a buy-and-hold strategy and not active trading. However, position trading, when done by an advanced trader, can be a form of active trading. Position trading uses longer term charts - anywhere from daily to monthly - in combination with other methods to determine the trend of the current market direction. This type of trade may last for several days to several weeks and sometimes longer, depending on the trend. Trend traders look for successive higher highs or lower highs to determine the trend of a security. By jumping on and riding the "wave," trend traders aim to benefit from both the up and downside of market movements. Trend traders look to determine the direction of the market, but they do not try to forecast any price levels. Typically, trend traders jump on the trend after it has established itself, and when the trend breaks, they usually exit the position. This means that in periods of high market volatility, trend trading is more difficult and its positions are generally reduced.
+
+comment: something that we can get from this style, but it may not be very suitable for our jobs. @og
+
+When a trend breaks, swing traders typically get in the game. At the end of a trend, there is usually some price volatility as the new trend tries to establish itself. Swing traders buy or sell as that price volatility sets in. Swing trades are usually held for more than a day but for a shorter time than trend trades. Swing traders often create a set of trading rules based on technical or fundamental analysis; these trading rules or algorithms are designed to identify when to buy and sell a security. While a swing-trading algorithm does not have to be exact and predict the peak or valley of a price move, it does need a market that moves in one direction or another. A range-bound or sideways market is a risk for swing traders. 
+For more on swing trading, see our Introduction To Swing Trading. link: https://www.investopedia.com/articles/trading/02/101602.asp
+
+comment: not read yet @og
+
+Scalping is one of the quickest strategies employed by active traders. It includes exploiting various price gaps caused by bid/ask spreads and order flows. The strategy generally works by making the spread or buying at the bid price and selling at the ask price to receive the difference between the two price points. Scalpers attempt to hold their positions for a short period, thus decreasing the risk associated with the strategy. Additionally, a scalper does not try to exploit large moves or move high volumes; rather, they try to take advantage of small moves that occur frequently and move smaller volumes more often. Since the level of profits per trade is small, scalpers look for more liquid markets to increase the frequency of their trades. And unlike swing traders, scalpers like quiet markets that aren't prone to sudden price movements so they can potentially make the spread repeatedly on the same bid/ask prices. 
+To learn more on this active trading strategy, read Scalping: Small Quick Profits Can Add Up. link: https://www.investopedia.com/articles/trading/05/scalping.asp
+
+comment: not read yet @og
+
+
