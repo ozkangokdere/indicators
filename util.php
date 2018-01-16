@@ -111,6 +111,109 @@ class Indicators {
         return array($smaW20Period, $upperBand, $lowerBand);
     }
     
+    public function rsi() 
+    { // A function to make Rsi functions as if they are overloaded.
+        switch (func_num_args()) {
+        case 1:
+            return $this->rsiConsecutive(func_get_arg(0));
+        case 2:
+            return $this->rsiOneAtEach(func_get_arg(0), func_get_arg(1));
+        case 4:
+            return $this->rsiSingle(func_get_arg(0), func_get_arg(1), func_get_arg(2), func_get_arg(3));
+        default:
+            return NULL;
+        }
+    }
+    
+    private function rsiConsecutive($array) 
+    { // Relative Strength Index
+        $periodLength = 14;
+        $keys = array_keys($array);
+        $length = sizeof($array);
+
+        $averageGain = array();
+        $averageLoss = array();
+        $rsi = array();
+
+        for ($i = 0; $i < $length - $periodLength; $i++) {
+            $positiveSum = 0;
+            $negativeSum = 0;
+            for ($j = 0; $j < $periodLength; $j++) {
+                
+                $diff = $array[$keys[$i+$j+1]] - $array[$keys[$i+$j]];
+                if($diff > 0)
+                    $positiveSum += $diff;
+                else
+                    $negativeSum += $diff;
+            }
+            array_push($averageGain, $positiveSum/$periodLength);
+            array_push($averageLoss, abs($negativeSum)/$periodLength);
+            if ($negativeSum != 0)
+                array_push($rsi, 100 - (100/(1+$positiveSum/abs($negativeSum))));
+            else 
+                array_push($rsi, 100);
+        }
+        return array($rsi, $averageGain, $averageLoss);
+    }
+
+    private function rsiOneAtEach($openArray, $closeArray)
+    {
+        $periodLength = 14;
+        $keysOpen = array_keys($openArray);
+        $keysClose = array_keys($closeArray);
+        $lengthOpenArray = sizeof($openArray);
+        $lengthCloseArray = sizeof($closeArray);
+        
+        if ($lengthOpenArray != $lengthCloseArray)
+            return NULL;
+        $length = $lengthOpenArray;
+
+        $averageGain = array();
+        $averageLoss = array();
+        $rsi = array();
+
+        for ($i = 0; $i < $length - $periodLength + 1; $i++) {
+            $positiveSum = 0;
+            $negativeSum = 0;
+            for ($j = 0; $j < $periodLength; $j++) {
+                
+                $diff = $closeArray[$keysClose[$i+$j]] - $openArray[$keysOpen[$i+$j]];
+                if($diff > 0)
+                    $positiveSum += $diff;
+                else
+                    $negativeSum += $diff;
+            }
+            array_push($averageGain, $positiveSum/$periodLength);
+            array_push($averageLoss, abs($negativeSum)/$periodLength);
+            if ($negativeSum != 0)
+                array_push($rsi, 100 - (100/(1+$positiveSum/abs($negativeSum))));
+            else 
+                array_push($rsi, 100);
+        }
+        return array($rsi, $averageGain, $averageLoss);
+    } 
+
+    private function rsiSingle($openVal, $closeVal, $lastAverageGain, $lastAverageLoss) 
+    {
+        $periodLength = 14;
+        $diff = $closeVal - $openVal;
+        if ($diff > 0) {
+            $gain = $diff;
+            $loss = 0;
+        } else {
+            $gain = 0;
+            $loss = abs($diff);
+        }
+
+        $averageGain = ($lastAverageGain*($periodLength-1) + $gain) / $periodLength;
+        $averageLoss = ($lastAverageLoss*($periodLength-1) + $loss) / $periodLength;
+        if ($averageLoss != 0) {
+            return array(100 - 100/(1+$averageGain/$averageLoss), $averageGain, $averageLoss);
+        } else {
+            return array(100, $averageGain, $averageLoss);
+        }
+    }
+
     private function macdLine($array)
     {
         if (!($emaW12Period = $this->ema($array, 12))) return NULL;
