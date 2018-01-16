@@ -118,6 +118,8 @@ class Indicators {
             return $this->rsiConsecutive(func_get_arg(0));
         case 2:
             return $this->rsiOneAtEach(func_get_arg(0), func_get_arg(1));
+        case 4:
+            return $this->rsiSingle(func_get_arg(0), func_get_arg(1), func_get_arg(2), func_get_arg(3));
         default:
             return NULL;
         }
@@ -189,6 +191,27 @@ class Indicators {
                 array_push($rsi, 100);
         }
         return array($rsi, $averageGain, $averageLoss);
+    } 
+
+    private function rsiSingle($openVal, $closeVal, $lastAverageGain, $lastAverageLoss) 
+    {
+        $periodLength = 14;
+        $diff = $closeVal - $openVal;
+        if ($diff > 0) {
+            $gain = $diff;
+            $loss = 0;
+        } else {
+            $gain = 0;
+            $loss = abs($diff);
+        }
+
+        $averageGain = ($lastAverageGain*($periodLength-1) + $gain) / $periodLength;
+        $averageLoss = ($lastAverageLoss*($periodLength-1) + $loss) / $periodLength;
+        if ($averageLoss != 0) {
+            return array(100 - 100/(1+$averageGain/$averageLoss), $averageGain, $averageLoss);
+        } else {
+            return array(100, $averageGain, $averageLoss);
+        }
     }
     
     private function macdLine($array)
