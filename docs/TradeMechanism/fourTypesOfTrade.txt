@@ -21,6 +21,11 @@ comment: this may be the one that we want to do, but not a day, but a little lon
 Scalping is one of the quickest strategies employed by active traders. It includes exploiting various price gaps caused by bid/ask spreads and order flows. The strategy generally works by making the spread or buying at the bid price and selling at the ask price to receive the difference between the two price points. Scalpers attempt to hold their positions for a short period, thus decreasing the risk associated with the strategy. Additionally, a scalper does not try to exploit large moves or move high volumes; rather, they try to take advantage of small moves that occur frequently and move smaller volumes more often. Since the level of profits per trade is small, scalpers look for more liquid markets to increase the frequency of their trades. And unlike swing traders, scalpers like quiet markets that aren't prone to sudden price movements so they can potentially make the spread repeatedly on the same bid/ask prices. 
 To learn more on this active trading strategy, read Scalping: Small Quick Profits Can Add Up. link: https://www.investopedia.com/articles/trading/05/scalping.asp
 
-comment: smaller earning safer earning @og
+comment: smaller earning safer earning. We can start with scalping:
+First,  Look forward a canditate to buy among all,
+Than,  Buy with a stair strategy, let say 3 steps,
+Determine an exit price, but a small ratio
+Exit if occurs, 
+Wait if fails@og
 
 
